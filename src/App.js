@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import styles from './App.module.css';
+import Title from './components/Title/Title';
+import Background from './components/Background/Background';
+import Grid from './components/Grid/Grid';
+import Rocket from './components/Rocket/Rocket';
+import Smoke from './components/Rocket/Smoke';
+import facts from './data/NASA_facts.json';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      facts,
+    }
+  }
+
+  updateClicked = (id) => {
+    let stateCopy = Object.assign({}, this.state);
+    stateCopy.facts[id].clicked = !stateCopy.facts[id].clicked;
+    this.setState(stateCopy);
+    console.log(this.state);
+  }
+
+  render() {
+    return (
+      <div className={styles.App}>
+        <Title />
+        <Background />
+        <Grid facts={this.state.facts} updateClicked={this.updateClicked} />
+        <Rocket />
+        <Smoke />
+      </div>
+    )
+  }
 }
-
-export default App;
